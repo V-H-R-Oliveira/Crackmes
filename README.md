@@ -5,3 +5,4 @@
 - binary-3 = https://crackmes.one/crackme/5c268e8333c5d41e58e00654
 - binary-4 = https://crackmes.one/crackme/5b81014933c5d41f5c6ba944
 - binary-5 = https://crackmes.one/crackme/5c2acb8933c5d46a3882b8d4
+- binary-6 = https://crackmes.one/crackme/5c90a72d33c5d4776a837f07
