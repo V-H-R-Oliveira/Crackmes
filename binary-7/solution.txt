@@ -1,0 +1,9 @@
+in checkPasswordFunction, using GDB:
+	0x0000555555555216 <+42>: lea    rcx,[rip+0x30c3]        # 0x5555555582e0 <pass>
+	x/s 0x5555555582e0
+	0x5555555582e0 <pass>: "isAAthisFunBBCCD"
+
+./crack2-by-D4RK_FL0W
+Please Enter The Password: isAAthisFunBBCCD
+***Correct You Cracked It***
+
