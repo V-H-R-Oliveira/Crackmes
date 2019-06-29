@@ -9,3 +9,4 @@
 - binary-7 = https://crackmes.one/crackme/5c95646333c5d46ecd37c960
 - binary-8 = https://crackmes.one/crackme/5ce137b933c5d4419da55ac2
 - binary-9 = https://crackmes.one/crackme/5c1a939633c5d41e58e005d1
+- binary-10 = https://crackmes.one/crackme/5d0d1e1333c5d41c6d56e155
