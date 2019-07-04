@@ -1,0 +1,9 @@
+first input: ./CNM
+second input: 1
+third input: 7
+fourth input: 8
+fifth input: 5
+
+descompact CNP.7z, cd CNP/ and ls
+
+key  'XOR_REV(QWER=RIFF)'
