@@ -1,0 +1,2 @@
+Password: c0ck
+Flag = flag{8B7535B74BC2FE3BA12B6374CFC8259}

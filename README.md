@@ -12,3 +12,5 @@
 - binary-10 = https://crackmes.one/crackme/5d0d1e1333c5d41c6d56e155
 - binary-11 = https://crackmes.one/crackme/5d1a37a233c5d410dc4d0c3f
 - binary-12 = https://crackmes.one/crackme/5d17962b33c5d41c6d56e1f2
+- binary-13 = https://crackmes.one/crackme/5cb7533133c5d4419da5584b 
+- binary-14 = https://crackmes.one/crackme/5c9d9eea33c5d4419da55641
