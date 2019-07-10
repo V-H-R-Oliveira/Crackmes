@@ -1,0 +1,4 @@
+./adventure hello
+strncmp("hello", argv[1], 5);
+strncmp("./adventure", "./adventure", 11);
+last input = ./adventure
