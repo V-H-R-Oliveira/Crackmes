@@ -1,5 +1,4 @@
 from random import choice
-from time import sleep
 
 def pickKey(tam:int = 11) -> str:
     key: str = ""
@@ -12,7 +11,7 @@ def pickKey(tam:int = 11) -> str:
         key += choice('acdefghizklmnopqrstuvxywzABCDEFGHIZKLMNOPQRSTUVXYWZ0123456789')
     return key + 'bbb'
 
-print(" 11 <= entrada <= 256")
+print(" 11 <= entrada < 244")
 tam: int = int(input("Enter the Key: "))
 key: str = ""
 
@@ -21,7 +20,7 @@ key: str = ""
 o login que ter no mínimo 11 caracteres, com um @ na quinta posição ou login[4] e tem que ter 3 caracteres 'b', independentes de posição
 '''
 
-if tam >= 11 and tam <= 256:
+if tam >= 11 and tam < 244:
     key = pickKey(tam)
     print("Key:", key)
 else:
