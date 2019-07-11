@@ -1,0 +1,5 @@
+I just use ltrace for that
+
+./adventure hello
+./adventure
+To the left

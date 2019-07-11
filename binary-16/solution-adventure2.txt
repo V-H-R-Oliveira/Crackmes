@@ -1,0 +1,58 @@
+'''
+The real size of argv[1]
+strlen("3123" + 1) = 3;
+
+statement to be verify:
+ - The argv[1] must begin with 3.
+
+if(strlen("3123" + 1) == (long)((int)*argv[1] + -0x30); yes, that match
+
+It's obvious that the input has to be different then '222'.
+
+so lets go into step2((unsigned long) argc, (long)argv, argc) function
+
+cVar1 = **(char **)(argv + 8);  picks the first char of argv[1] so a '3';
+
+the argument is opcional
+
+the guess must be 66, because the result will always be 66, because hex(3) + 0xf (15) = int(66)
+
+
+'''
+ 
+Example
+
+./adventure2 3123
+   
+   Welcome to step 2 of chapter 2 !
+   If you see this message because you randomly played with arguments
+   but didn't complete the 1st step, please go back and run the program without arguments -> (Sequence to achive step2 function is 'Hello')
+   Unless you're cheating ? meh... whatever...
+
+   BUT !! If you completed the 1st step : CONGRATULATION \o/ !!
+
+   ...
+   Damn... I painstakingly coded this whole [go directly to step 2 stuff]
+   So now i guess i really have to code a step 2
+   Don't want to do it... (Just press enter or something and we'll improvise somehow)
+
+   By the way, what argument did you use to come here ? 2
+ 2 ? good good... please remember it !
+
+  (Press enter or whatever, who care ?)
+
+- So you want to register to the guild ? Math question then !
+- it's totally not because i'm lazy or anything ! Bakkaaaa~ !
+what's 2 + 3 * 5 ? 66
+BWAHAHAHAHA BAKAAAAAAAA !!! 0x5dd614a4 is super totally wrooong !
+Segmentation fault (core dumped)
+
+...
+
+ho damn, that's right...
+WHY ?
+
+To be continued... (you really succeded but i'll kill you anyway. don't worry, you'll be fine)
+
+Falha de segmentação (imagem do núcleo gravada)
+
