@@ -16,3 +16,4 @@
 - binary-14 = https://crackmes.one/crackme/5c9d9eea33c5d4419da55641
 - binary-15 = https://crackmes.one/crackme/5d0fa1ac33c5d41c6d56e172
 - binary-16 = https://crackmes.one/crackme/5d1a344033c5d410dc4d0c3e
+- binary-17 = https://crackmes.one/crackme/5d1fb02533c5d410dc4d0c75
