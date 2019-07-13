@@ -1,0 +1,4 @@
+username: 12345. Password: 6789
+user:00000 .Pass: 5555
+user:1111 .Pass: 666
+chr in user and chr in pass must have difference offset = 5 and the loop is over the password
