@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <unistd.h>
+#define SIZE 1000
 
 unsigned long sum_ascii(char *username)
 {
@@ -19,15 +21,20 @@ unsigned long sum_ascii(char *username)
 int main(int argc, char ** argv)
 {
     char *username;
-    unsigned long username_ascii_sum;
+    unsigned long username_ascii_sum, password;
     char first_username_char;
+    char password_string[SIZE];
 
     if(argc == 2)
     {
         username = argv[1];
         first_username_char = *username;
         username_ascii_sum = sum_ascii(username);
-        printf("Your password: %ld\n",(unsigned long)((username_ascii_sum ^ (int)first_username_char * 3) << 10));
+        password = (unsigned long)((username_ascii_sum ^ (int)first_username_char * 3) << 10);
+        printf("Username: %s\nPassword: %ld\n", username, password);
+        sprintf(password_string, "%ld", password);
+        char *args[4] = {"./keygenme", username, password_string, NULL};
+        execve(args[0], args, NULL);
     }else
     {
         fprintf(stderr, "Invalid or insufficent arguments");
@@ -35,5 +42,4 @@ int main(int argc, char ** argv)
     }
 
     return 0;
-    //printf("%u\n", ((unsigned int)564 ^ (int)chr * 3) << 10);
 }
