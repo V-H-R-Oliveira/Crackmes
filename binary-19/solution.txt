@@ -1,0 +1,11 @@
+The function call one function that sum all the ascii char of argv[1].
+
+The secret is this calc: (unsigned long)((username_ascii_sum ^ (int)first_username_char * 3) << 10), where it performs a xor operation between the
+sum of all ascii char of the argv[1] and the first argv[1] char. 
+
+Then, it multiplies with 3 and executes a left shift, <<, with strlen("./keygenme") & 0x1f, which it can be reduced to 10, (10 & 0x1f = 10). 
+
+The password is the result of the calc. 
+I have attached a keygen crack file.
+
+Thnx for the crackme
