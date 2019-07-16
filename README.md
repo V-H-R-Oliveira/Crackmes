@@ -1,4 +1,5 @@
 # Url for the crackmes pages
+## My nick = BinaryNewbie
 
 - binary-1 = https://crackmes.one/crackme/5b8101c833c5d41f5c6ba945
 - binary-2 = https://crackmes.one/crackme/5ccecc7e33c5d4419da559b3
@@ -18,3 +19,4 @@
 - binary-16 = https://crackmes.one/crackme/5d1a344033c5d410dc4d0c3e
 - binary-17 = https://crackmes.one/crackme/5d1fb02533c5d410dc4d0c75
 - binary-18 = https://crackmes.one/crackme/5c53840a33c5d475210bc6e9
+- binary-19 = https://crackmes.one/crackme/5d24585133c5d410dc4d0cbd
