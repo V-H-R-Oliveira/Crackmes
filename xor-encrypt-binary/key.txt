@@ -1,0 +1,11 @@
+password: pwned\!\!
+
+xor entre 0x102030405060708 e 0x123226060687078 = 0x212164656e7770 = !!denwp => pwned!!
+./x pwned\!\! e voilá 
+
+Em anexo: 
+ - reconstrução do código original, onde foi usado o retdec para auxiliar no processo.
+ - Uma solução alternativa que envolve patch, onde qualquer coisa no argv[1] é valida.
+
+Valeu pelo crackme.
+BinaryNewbie
