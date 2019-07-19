@@ -1,0 +1,3 @@
+password: __gmon_start__ 
+To achieve this, you must to do a bypass on the ptrace anti-debug trick, otherwise, it won't work.
+So in order to bypass ptrace syscall, i just change the opcode of the je to jne, and entry the right pass.
