@@ -21,3 +21,4 @@
 - binary-18 = https://crackmes.one/crackme/5c53840a33c5d475210bc6e9
 - binary-19 = https://crackmes.one/crackme/5d24585133c5d410dc4d0cbd
 - binary-20 = https://crackmes.one/crackme/5b9d312233c5d45fc286ae03
+- binary-21 = https://crackmes.one/crackme/5ab77f6533c5d40ad448cb73
