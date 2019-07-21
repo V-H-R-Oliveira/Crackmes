@@ -11,7 +11,7 @@ int main(void)
     char username_copy[USER_LENGTH];
     int i = 0, j = 0, k = 0, offset = 0;
 
-    printf("Enter username: ");
+    printf("Enter username, with length 12: ");
     fgets(username, USER_LENGTH, stdin);
     
     username[13] = '\0';
