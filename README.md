@@ -23,3 +23,4 @@
 - binary-20 = https://crackmes.one/crackme/5b9d312233c5d45fc286ae03
 - binary-21 = https://crackmes.one/crackme/5ab77f6533c5d40ad448cb73
 - binary-22 = https://crackmes.one/crackme/5ab77f6333c5d40ad448ca01
+- binary-23 = https://crackmes.one/crackme/5b5b386033c5d46b771434b8

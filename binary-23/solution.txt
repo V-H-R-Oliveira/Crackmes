@@ -1,0 +1,4 @@
+The crackme has two strings code in hexadecimal format,which are used in the offset computation: "THEPIRATEISZ" and "?*-/597$=#&@"
+Both username and password must be size 11.
+
+the algorithm is in the .c file.
