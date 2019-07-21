@@ -1,0 +1,30 @@
+Using ltrace, the solution is "IEEAAEEI".
+
+ltrace ./lincrackme2 
+__libc_start_main(0x804860a, 1, 0xffd95d74, 0x8048790 <unfinished ...>
+close(3)                                                                                    = -1
+malloc(9)                                                                                   = 0x8509160
+printf("You can enter the key now: ")                                                       = 27
+close(3)                                                                                    = -1
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75You can enter the key now: 12345678
+)                                              = 49
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 50
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 51
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 52
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 53
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 54
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 55
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 56
+getchar(3, 0xf7efc000, 0xffd95cd8, 0xf7d73a75)                                              = 10
+strncmp("IEEAAEEI", "12345678", 9)                                                          = 1
+	     ^
+puts("Wrong Key. Looks like you suck a"...Wrong Key. Looks like you suck at this.
+)                                                 = 40
++++ exited (status 1) +++
+
+So:
+
+./lincrackme2 
+You can enter the key now: IEEAAEEI
+OK. You passed! Next crackme will be released soon ^_^
+
