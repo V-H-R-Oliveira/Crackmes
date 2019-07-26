@@ -26,3 +26,4 @@
 - binary-23 = https://crackmes.one/crackme/5b5b386033c5d46b771434b8
 - binary-24 = https://crackmes.one/crackme/5ab77f5533c5d40ad448c238
 - binary-25 = https://crackmes.one/crackme/5d10534e33c5d41c6d56e17e
+- binary-26 = https://crackmes.one/crackme/5ab77f5533c5d40ad448c1e6
