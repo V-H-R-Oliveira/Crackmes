@@ -29,3 +29,4 @@
 - binary-26 = https://crackmes.one/crackme/5ab77f5533c5d40ad448c1e6
 - binary-27 = https://crackmes.one/crackme/5ab77f6333c5d40ad448ca8b
 - binary-28 = https://crackmes.one/crackme/5ccf3bf333c5d4419da559bd
+- binary-29 = https://crackmes.one/crackme/5aef385633c5d41ac64b492f
