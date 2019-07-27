@@ -1,0 +1,59 @@
+Hello Destructeur!
+
+So in order to solve this crackme, i used ghidra for get the assembly view and the decompiled one too, gdb for get some constants, that i will
+explain soon, and python for calculate the right string.
+
+So let's take a view on this snippet, tooked from ghidra dissambly view:
+
+00400641 c6 45 dd 25     MOV        byte ptr [RBP + format],'%'
+00400645 c6 45 f7 73     MOV        byte ptr [RBP + format_string],'s'
+
+The two assembly instructions above could fool anyone that only looks for a decompiled view, because we could think that scanf receives "%s"
+
+00400649 0f b6 45 f7     MOVZX      EAX,byte ptr [RBP + format_string]
+0040064d 83 f0 03        XOR        EAX,0x3                                          %p
+00400650 88 45 de        MOV        byte ptr [RBP + correct_format_string],AL
+
+The three assembly instructions above tell us the right scanf format, a %p, in other words, scanf receives an hexadecimal string, without 0x, instead of a common string.
+
+00400653 c6 45 df 00     MOV        byte ptr [RBP + local_29],0x0
+00400657 48 8d 55 e0     LEA        RDX=>user_input,[RBP + -0x20]
+0040065b 48 8d 45 dd     LEA        RAX=>format,[RBP + -0x23]
+0040065f 48 89 d6        MOV        RSI,RDX
+00400662 48 89 c7        MOV        RDI,RAX
+00400665 b8 00 00        MOV        EAX,0x0
+0040066a e8 91 fe        CALL       scanf      int scanf(char * __format, ...)
+
+The remain snippet above is just a scanf call.
+
+0040066f 48 8b 45 e0     MOV        RAX,qword ptr [RBP + user_input]
+00400673 48 0f be        MOVSX      RDX,byte ptr [RBP + format_string]
+                 55 f7
+00400678 48 f7 da        NEG        RDX                                              0xffffffffffffff8d
+0040067b 48 01 d0        ADD        RAX,RDX
+
+The four assembly instructions above move user input to RAX and 's' from "%s" to RDX, then performs a ~(int)'s' and the result
+is 0xffffffffffffff8d (tooked from gdb).
+
+So, the big challenge was to find a hexadecimal input that summed with that constant will give us the address of goodBoy function call (0x004006b0),
+because the CALL RAX below points the address from the ADD RAX, RDX to RIP.
+
+0040067e 48 89 45 e0     MOV        qword ptr [RBP + user_input],RAX
+00400682 48 8b 45 e0     MOV        RAX,qword ptr [RBP + user_input]
+00400686 ff d0           CALL       RAX
+
+In order to find the correct string, i used python to be my hex calculator and i found a hexadecimal value, 400723, that fits the constrains mentioned above.
+
+Final view:
+
+Wrong way - ./Sh4ll10
+Give me your password: 1
+Segmentation fault (imagem do núcleo gravada)
+
+Right answer - ./Sh4ll10
+Give me your password: 400723
+Good boy
+
+Thanks for the crackme.
+
+Binary Newbie.
