@@ -1,0 +1,47 @@
+Hello Destructeur!
+
+This C++ binary performs four xor operations between some inputs and compares the final xor result with the encrypted flag.
+If it's equal, then the software is cracked, otherwise, it shows a message error.
+
+In order to solve this crackme, i used ghidra for static analysis, gdb for dynamic analysis, and cpp documentation (http://www.cplusplus.com/reference/string/string/).
+
+The software performs four xor operations between two strings in hexadecimal or c-like string format.
+
+The first xor is useless and just generates confusion in the process, and it takes "Incorrect password, ganbatte kudasai!" and "zg2z8h4z2z", then
+returns 0x19511a4a15510933.
+
+The second xor operation is between "Your password is correct!" and "zg2z8h4z2z", then returns 0x955181808470823.
+
+The third xor operation is between the user input and 0x955181808470823, then returns some hexadecimal value.
+
+The last xor operation is between the third xor result and the second xor result(0x955181808470823), then it returns the user input encrypted.
+
+The last thing is the strcmp(user_input_encrypted, hash), and it returns a good message or a bad message.
+
+I reconstruct the xor function, in python syntax:
+
+def xor(string1: str, string2: str):
+    buffer: bytearray = bytearray([])
+    for i in range(len(string1)):
+            buffer[i] = hex(ord(string1[i]) ^ ord(string2[j]))
+            j = (j + 1) % len(string2) # second string index
+    return buffer
+
+So, after reversed engineering the binary, i use the encrypted flag, as an input, in gdb and it returns C4rrect_P4ssw0rd, which is the flag.
+
+Testing:
+
+Wrong input:
+
+./crackMe3
+Password: 12354
+Incorrect password, ganbatte kudasai!
+
+Right input:
+
+./crackMe3
+Password: C4rrect_P4ssw0rd
+Your password is correct!
+
+
+Thanks for the crackme, Binary Newbie.

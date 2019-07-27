@@ -1,0 +1,13 @@
+ #primeiro xor é entre "Incorrect password, ganbatte kudasai!" e "zg2z8h4z2z" =  0x19511a4a15510933
+ #segundo xor é entre "Your password is correct!" e "zg2z8h4z2z" = 0x955181808470823
+ #terceiro xor é entre input e o segundo xor = resultado do terceiro
+ #quarto xor é entre o terceiro xor e o segundo xor = resultado quarto xor
+ #o que acontece depois é uma comparação entre a "zg2z8h4z2z" e o resultado do 4 xor e tem que ser igual a isso
+ 
+ Flag = C4rrect_P4ssw0rd
+ 
+ def xor(string1: str, string2: str):
+     for i in range(len(string1)):
+         buffer[i] = hex(ord(string1[i]) ^ ord(string2[j]))
+         j = (j + 1) % len(string2) # index da segunda string
+     return buffe
