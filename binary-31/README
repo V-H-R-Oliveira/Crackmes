@@ -1,0 +1,57 @@
+Hello Destructeur!
+
+So this time, you put the description: "Anti debug technique".
+
+The first thing I thought about was a ptrace binary trick, and I got the right answer when I ran the string command on binary.
+
+Next, i opened the crackme in ghidra and the first thing i did was looking for ptrace call.
+
+The name of the function that used ptrace was "function". After i used strace and ltrace to analyse the behaviour of the binary.
+
+So the behavior was:
+
+if i use anything that tries to attach to the binary process, the wrong string is picked and we see something like this:
+
+....
+ptrace(0, 0, 1, 0)                                                                          = -1
+strlen("142x142x121x1424421")
+strcmp("eHaSh9zS8a1Sh8g1h8h", "???????????????????")
+puts("Bad password, you can buy the pr"...Bad password, you can buy the product by sending $10: 1Fn3N79g2soMWQES2ZWVUu59Y4xKf3hWKh)
+
+
+To bypass ptrace, in order to use ltrace to see the right answer, i used radare2 to switch "je" to "jne" and then, i was able to attach a debugger on the binary process.
+
+I used the ltrace with some random input and i saw this:
+....
+ptrace(0, 0, 1, 0)                               = -1
+strlen("142x142x121x1424421x")                   = 20
+strcmp("eHaSh9zS8a1Sh8g1h8hS", "1234\n")         = 52
+puts("Bad password, you can buy the pr"...Bad password, you can buy the product by sending $10: 1Fn3N79g2soMWQES2ZWVUu59Y4xKf3hWKh
+)      = 89
+
+So we can see the right flag above, which is "eHaSh9zS8a1Sh8g1h8hS".
+
+Let's test it in the original binary*:
+
+First a random input:
+
+./Sh4ll4
+1234
+Bad password, you can buy the product by sending $10: 1Fn3N79g2soMWQES2ZWVUu59Y4xKf3hWKh
+
+Finally, the correct flag:
+
+./Sh4ll4
+eHaSh9zS8a1Sh8g1h8hS
+YEAAAAAAAAAH YOU ARE GOOD MAN!
+or
+./a.out
+eHaSh9zS8a1Sh8g1h8hS
+YEAAAAAAAAAH YOU ARE GOOD MAN!
+
+
+*ps: i renamed from a.out to Sh4ll4
+
+Thanks for the crackme.
+
+Binary Newbie.
