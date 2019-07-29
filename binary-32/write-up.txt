@@ -1,0 +1,36 @@
+Hello Destructeur!
+
+So this one was easy. I used gdb for get the stack values.
+
+There are 2 functions in the binary.
+
+The first one just loads some random values to the stack, which will be used by the second function.
+
+The second function just loads some values from the stack and performs some basic math operations between those values.
+
+So the snippet below describes the process:
+
+0x00005555555549f4 <+8>:	mov    eax,DWORD PTR [rbp-0x8]; Here, eax will get the value on rbp-0x8, which is 0x7
+0x00005555555549f7 <+11>:	add    DWORD PTR [rbp-0x4],eax; We will add the value in eax with the random value, 0x5, from rbp-0x4 and the result is 0xc;
+0x00005555555549fa <+14>:	mov    eax,DWORD PTR [rbp-0x4]; eax = 0xc;
+0x00005555555549fd <+17>:	imul   eax,eax,0x2d; Finally, eax = eax(0xc) * 0x2d = 0x21c(flag).
+
+Finally, i used python to convert to decimal and the result was 540.
+
+Let's test:
+
+Wrong value:
+
+./crackMe1
+Password: 1234
+Bad password
+
+Correct Flag:
+./crackMe1
+Password: 540
+Good password
+
+Thanks for this crackme.
+
+Binary Newbie.
+
