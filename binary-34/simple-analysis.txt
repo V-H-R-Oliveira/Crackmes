@@ -1,0 +1,40 @@
+tem que possuir 4 traços, onde é comparado com "----"
+Entrada tem que ter 29 de tamanho
+
+traço no:
+
+input[7]
+input[15]
+input[23]
+input[31]
+
+   0x55555555527b:	movzx  eax,BYTE PTR [rax+0x7]
+   0x555555555286:	movzx  eax,BYTE PTR [rax+0xf]
+   0x5555555291:	movzx  eax,BYTE PTR [rax+0x17]
+   0x55555555529c:	movzx  eax,BYTE PTR [rax+0x1f]
+
+charset vai de , até ;
+
+./de_mucholoko check "&##>>*#-=?++>%+-??*@+=)-=*'@'=@-#)+*()="
+
+[SystemLoading]	|
+[SystemAccess]	| Welcome: Mr. Satan 666'
+[SystemAccess]	| Flag: &##>>*#-=?++>%+-??*@+=)-=*'@'=@-#)+*()='
+
+
+
+
+./de_mucholoko check 1414
+
+[SystemError] Unknow Format
+
+What this m0ther fucker is trying?
+
+
+
+ltrace ./de_mucholoko
+ptrace(0, 0, 1, 0)                                                                          = -1
+puts("[SystemProtect] Anti-debug"[SystemProtect] Anti-debug
+)                                                          = 27
++++ exited (status 255) +++
+
