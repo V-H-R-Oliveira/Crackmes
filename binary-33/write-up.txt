@@ -1,0 +1,40 @@
+Hello Destructeur!
+
+This one gives me a little work.
+
+So initally, i did a static analysis with ghidra and dynamic analysis with gdb.
+
+I realized that was only the hashed flag, so i tried to search on memory, but i didn't find nothing.
+
+The next approach was search for sha1 online decryptor, to see if the hash was already in one online database, and again i didn't find nothing.
+
+So i looked for the result of decompilation, and i saw that wasn't any validation of input size, and after that, i checked in gdb for security and the binary was compiled with no defences against buffer overflow, so i got the path.
+
+I build a bash script for generate a payload, which contains the padding + success() address.
+
+Let's test:
+
+First with a random input:
+
+./a.out
+Rules: you don't have the right to modify the binary, crack this crackme as if it was on a remote server on which you don't have write permissions.
+Give me your password: 1234
+Bad password
+
+Finally with the exploit.
+
+./bypass.sh
+This only works with ASLR turned off
+./a.out < exploit
+
+-------------
+
+./a.out < exploit
+Rules: you don't have the right to modify the binary, crack this crackme as if it was on a remote server on which you don't have write permissions.
+Give me your password: Bad password
+This is the good password!
+Falha de segmentação (imagem do núcleo gravada)
+
+Thanks for this crackme.
+
+Binary Newbie.
