@@ -1,0 +1,2 @@
+flag{3sc0nd1d0_3h_M41s_G0st0S0}
+simple jmp address of hidden function with radare2
