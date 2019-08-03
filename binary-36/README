@@ -2,10 +2,10 @@ Tools:
     - Ghidra, gdb, ida freeware, radare2
 
 Anti debug tricks noticed:
-    - Ptrace
-    - obfuscation
-    - stack pivoting or ROP, idk ahah
-    - close, i noticed that early, but i didn't know that was a anti-re trick*. *(I noticed that in hasherezade post after solved the challenge).
+    - Ptrace;
+    - obfuscation;
+    - stack pivoting or ROP, idk ahah;
+    - close, i noticed that early, but i didn't know that was an anti-re trick*. *(I noticed that in hasherezade post after solved the challenge).
 
 KeyGen made with python3.
 
