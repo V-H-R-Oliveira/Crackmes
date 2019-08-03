@@ -36,3 +36,4 @@
 - binary-33 = https://crackmes.one/crackme/5b1403c633c5d41557b02273
 - binary-34 = https://crackmes.one/crackme/5cc1117833c5d4419da558dc
 - binary-35 = https://crackmes.one/crackme/5c11e2f333c5d41e58e0057a
+- binary-36 = https://crackmes.one/crackme/5ab77f6333c5d40ad448ca00

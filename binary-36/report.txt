@@ -1,0 +1,45 @@
+Tools:
+    - Ghidra, gdb, ida freeware, radare2
+
+Anti debug tricks noticed:
+    - Ptrace
+    - obfuscation
+    - stack pivoting or ROP, idk ahah
+    - close, i noticed that early, but i didn't know that was a anti-re trick*. *(I noticed that in hasherezade post after solved the challenge).
+
+KeyGen made with python3.
+
+Wrong input:
+
+./lincrackme3-64
+ **********************************************************************
+ * Welcome to lincrackme3! This is a simple linux crackme. The goal   *
+ * is to understand the key checking method and write your own keygen *
+ * for it. Keep an eye on antidebugging techniques, because thats the *
+ * reason for this crackmes, knowing them and the way to bypass them. *
+ * Key format: XXXX-YYYY-WWWW-ZZZZ with all numbers. Good luck!       *
+ * @author: Adrian adrianbn[at]gmail.com http://securityetalii.es     *
+ * ********************************************************************
+
+Enter the key, you fool: 1234-1234-1234-1234
+Wrong key! I've seen monkeys smarter than you...
+
+Correct input:
+
+./lincrackme3-64
+ **********************************************************************
+ * Welcome to lincrackme3! This is a simple linux crackme. The goal   *
+ * is to understand the key checking method and write your own keygen *
+ * for it. Keep an eye on antidebugging techniques, because thats the *
+ * reason for this crackmes, knowing them and the way to bypass them. *
+ * Key format: XXXX-YYYY-WWWW-ZZZZ with all numbers. Good luck!       *
+ * @author: Adrian adrianbn[at]gmail.com http://securityetalii.es     *
+ * ********************************************************************
+
+Enter the key, you fool: 2508-7189-3451-3031
+Good! You got it, congratz. Have you tried to keygen me? Next crackme soon ^_^
+
+
+Thanks for the crackme.
+
+Binary Newbie
