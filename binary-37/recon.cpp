@@ -44,9 +44,9 @@ int main(int argc, char **argv)
     
     seed = stoi(argv1_to_cpp_string, nullptr, 10);
 
-    links = (int)(((seed ^ 0x141) + (seed ^ 0x7b)) * 0x533d) % 100;
+    links = (((seed ^ 0x141) + (seed ^ 0x7b)) * 0x533d) % 100;
 
-    if((int)links < 0) 
+    if(links < 0) 
     {
       links = -links;
     }else 
@@ -58,12 +58,12 @@ int main(int argc, char **argv)
     }
 
     
-    printf("Seed %s requires %d links\n\n",argv[1],(unsigned long)links);
+    printf("Seed %s requires %ld links\n\n",argv[1],(unsigned long)links);
     seed_cpy = seed;
 
     while((i < 100 && (i < links))) 
     {
-      printf("LINK %d\t\t%d\t->\t",(unsigned long)(i + 1),(unsigned long)seed_cpy);
+      printf("LINK %ld\t\t%ld\t->\t",(unsigned long)(i + 1),(unsigned long)seed_cpy);
       seed_cpy = parse(seed,seed_cpy,i);
       new_seed = seed_cpy;
       
@@ -72,7 +72,7 @@ int main(int argc, char **argv)
         new_seed = 0;
       }
 
-      printf("%d\t Sleeping for %dms\n",(unsigned long)seed_cpy,(unsigned long)new_seed);
+      printf("%ld\t Sleeping for %ldms\n",(unsigned long)seed_cpy,(unsigned long)new_seed);
       i++;
     }
     
@@ -81,9 +81,7 @@ int main(int argc, char **argv)
       puts("ERROR\nMaximum allowed iterations reached");
       exit(1);
     }
-    
-    printf("%u == %u && %u == %u\n", seed, seed_cpy, i, links);
-
+   
     if((seed == seed_cpy) && (i == links)) 
     {
       puts("You have broken the chain!");
