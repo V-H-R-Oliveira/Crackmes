@@ -56,8 +56,7 @@ int main(int argc, char **argv)
         links = 10;
       }
     }
-
-    
+  
     printf("Seed %s requires %ld links\n\n",argv[1],(unsigned long)links);
     seed_cpy = seed;
 
