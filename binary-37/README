@@ -1,0 +1,62 @@
+Hello Dosisod!
+
+So that was a tricky crackme.
+
+So the funny fact was my first brute force was doing the correct bruteforce with strange values, even after i spent some time trying to figure out what was wrong kk.
+
+I gave up and i come back to the problem after a few weeks of my first approach, and i tried some individual numbers and then i executed my previous bruteforce against it.
+
+So i realized that i wasn't cleaning the rest of the variables, so that's why i didn't done in my first approach.
+
+Nevermind, i changed it and i executed with positive integers, and i didn't find nothing.
+
+So why not with negative values, and boom, there was the seed.
+
+So let's start the analysis:
+
+For this problem, i used ghidra for static analysis and it was the only tool needed.
+
+So, after opened the binary in ghidra, i looked for the main function and it takes an argv[1] value and converts to int using stoi.
+
+Then it allocates some C++ strings and test if the value was not 0.
+
+After that, it calculates the link based on the seed with this algorithm: (((seed ^ 0x141) + (seed ^ 0x7b)) * 0x533d) % 100;
+
+If the link is 0, it changes to 10, otherwise the early result doesn't change.
+
+Then, it runs a loop and calculates the seed with that algorithm, which looks strange, let me ask you: Did you invented that one or was a famous one?
+
+The algorithm reversed was something like this:
+
+int parse(int current_seed,int new_seed,int current_interation)
+{
+  unsigned int offset;
+  int new_seed_copy;
+  int i = 0;
+  int offset2 = 1;
+
+  if((new_seed < -0x1000) || (new_seed_copy = new_seed, 0x1000 < new_seed))
+  {
+    offset = (unsigned int)(new_seed >> 0x1f) >> 0x14;
+    new_seed_copy = -((new_seed + offset & 0xfff) - offset);
+  }
+
+  while (i < 3)
+  {
+    offset2 = offset2 ^ new_seed_copy << ((char)i & 0x1f);
+    i++;
+  }
+
+  return (int)(current_seed + ((current_interation + current_seed) - 1U ^ new_seed_copy) + offset2 - 0xf);
+}
+
+Finally, it verifies if the original seed is equal to the last generated seed and if the number of the interation was the same as the link number.
+
+If it satisfies the condition above, them the chain breaks, otherwise it fails.
+
+You can see the full algorithm in the recon.cpp
+
+Thanks for this crackme.
+
+Binary Newbie
+
