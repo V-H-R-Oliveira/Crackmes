@@ -13,8 +13,8 @@ int parse(int current_seed,int new_seed,int current_interation)
   
   if(new_seed == 0) 
   {
-  //  puts("ERROR\nInvalid chain produced!");
-    //exit(0);
+    puts("ERROR\nInvalid chain produced!");
+    exit(0);
   }
   
   if((new_seed < -0x1000) || (new_seed_copy = new_seed, 0x1000 < new_seed)) 
