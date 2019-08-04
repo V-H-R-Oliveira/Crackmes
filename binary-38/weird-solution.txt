@@ -1,0 +1,8 @@
+1º perl -e 'print ""' | ./save_scooby
+2º perl -e 'print "\x20"' | ./save_scooby
+3º perl -e 'print "\x-"' | ./save_scooby
+assuming A = anything, with any size,  so:
+4º perl -e 'print "\x-A"' | ./save_scooby
+
+and it continues kaka
+

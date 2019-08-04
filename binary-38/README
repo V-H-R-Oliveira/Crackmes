@@ -1,0 +1,64 @@
+Hello buddy!!
+
+This crackme was easy and i will be short with my solution.
+
+I used ghidra and radare2 for this one.
+
+So let's start.
+
+Initially, before i opened it in ghidra, i played with the crackme and a notice usage of getcwd function, catched by strace.
+
+I saw a lots of strlen usage and no strcmp :(, whatever ahah. I also saw that the crackme wasn't stripped, with the file command.
+
+During my static analysis, i first looked for getcwd and the strlen functions call and i noticed that it picks the current directory and parse it in the algorithm described below in C-like language, which also is the correct key, where the min key is the first character and a max key is whole string.
+
+  while(i < (int)dir_length)
+  {
+    if(directory[(long)i] == '/') // if it has a '/' it replaces with '$'
+    {
+      directory[(long)i] = '$';
+    }
+    else
+    {
+      if((directory[(long)i] < 'a') || ('z' < directory[(long)i])) // search for lowercase characters
+      {
+        if(('@' < directory[(long)i]) && (directory[(long)i] < '[')) // search for printable characters in range (int)'@' and (int)'['
+          directory[(long)i] += '\x1e'; // sum with that thing
+      }
+      else
+        directory[(long)i] += -0x1e; // otherwise subtract with that value.
+    }
+
+    i++;
+  }
+
+  After parse the directory, it takes the user input and take each character of the user input and compares with each character of the directory or the key, in range of user input. So the algorithm is something like that:
+
+            0x00000875      8b45f8         mov eax, dword [local_8h]
+|      :|   0x00000878      4898           cdqe
+|      :|   0x0000087a      0fb69405e0ef.  movzx edx, byte [s + rax]
+|      :|   0x00000882      8b45f8         mov eax, dword [local_8h]
+|      :|   0x00000885      4898           cdqe
+|      :|   0x00000887      0fb68405e0ee.  movzx eax, byte [local_1120h + rax]
+|      :|   0x0000088f      38c2           cmp dl, al ; here, it makes a comparation between each user input character and each key character
+|     ,===< 0x00000891      7506           jne 0x899 ; if it's different, it jumps to the fail message
+|     |:|   0x00000893      8345f801       add dword [local_8h], 1 ; increments the loop counter
+|    ,====< 0x00000897      eb09           jmp 0x8a2
+|    ||:|   ; CODE XREF from main (0x891)
+|    |`---> 0x00000899      c745f4ffffff.  mov dword [local_ch], 0xffffffff ; -1 ; -12
+|    |,===< 0x000008a0      eb10           jmp 0x8b2
+|    ||:|   ; CODE XREFS from main (0x873, 0x897)
+|    `--`-> 0x000008a2      8b45f8         mov eax, dword [local_8h]
+|     |:    0x000008a5      3b45ec         cmp eax, dword [local_14h] ; it makes a comparation between loop counter and strlen(directory)
+|     |:,=< 0x000008a8      7d08           jge 0x8b2 ; if it's equal or greater, it jumps to the fail message
+|     |:|   0x000008aa      8b45f8         mov eax, dword [local_8h]
+|     |:|   0x000008ad      3b45f0         cmp eax, dword [local_10h]; it makes a comparation between loop counter and flag, which is 0 by default
+|     |`==< 0x000008b0      7cc3           jl 0x875 ; if the loop counter is less than 0, it jumps to the success message, *ps: I exploited that way first, before look in ghidra :)
+
+Finally, if user input is equal to the directory characters, it displays the good message, otherwise it fails.
+
+I made a keygen in C and i write other ways to bypass the crackme, without a keygen.
+
+Thanks for the crackme.
+
+Binary Newbie
