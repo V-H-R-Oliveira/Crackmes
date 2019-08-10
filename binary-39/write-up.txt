@@ -1,0 +1,44 @@
+Hello Loz!!
+
+This crackme was very simple, although C++ is very weird.
+
+So for the job, i used ghidra for static analysis and gdb for dynamic analysis.
+
+So let's start:
+
+First, the crackme takes an input from stdin and extracts the length of it.
+Then it loads the encrypted flag in a buffer, and compares the input length with 7, calling the checkLength function.
+
+Inside of checkLength, the important line is:
+    cmp    DWORD PTR [rbp-0x4c],eax ; where eax contains the user input and rbp-0x4c contains the correct length.
+
+After, it verifies the password, applying a xor operation with each user input character with 'B' and then it compares with ".-8.4.p".
+
+We can get the correct hash in:
+call   0x555555556a8f <_ZSteqIcEN9__gnu_cxx11__enable_ifIXsrSt9__is_charIT_E7__valueEbE6__typeERKNSt7__cxx1112basic_stringIS3_St11char_traitsIS3_ESaIS3_EEESE_>, where the args are:
+    arg[0]: 0x7fffffffddb0 --> 0x7fffffffddc0 --> 0x75747776717073 ('spqvwtu') ; arg[0] is the encrypted user input.
+    arg[1]: 0x7fffffffdd90 --> 0x7fffffffdda0 --> 0x702e342e382d2e ('.-8.4.p') ; arg[1] is the correct hash.
+
+If it's correct, it will display the good boy message, otherwise, it will fail.
+
+So, i took the correct hash, which was used in the comparation with the encrypted user input, then i passed it to a xor operation with 'B', and finally i was able to get the correct password, which was "lozlvl2".
+
+Finally, let's test it:
+
+First with the wrong input:
+
+./main
+1234567
+Login failed
+
+With the correct answer:
+
+./main
+lozlvl2
+Login successful
+
+I made a python 2 script to do the job for me.
+
+Thanks for the crackme.
+
+Binary Newbie.
