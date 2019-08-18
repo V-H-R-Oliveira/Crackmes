@@ -1,0 +1,42 @@
+Hello Skudo!!
+
+This crackme was funny, but it wasn't difficult at all.
+
+So for this job, i used ghidra for static analysis and gdb for dynamic analysis.
+
+In my analysis, i watched some interesting stuff:
+    - It takes a string, "imsupersecur3" and call a createKey function.
+    - The createKey function always return the same result, which is 0xb or 11 in decimal notation.*
+    - 0xb is the initial key.
+    - Then it takes a string, "SvenJoergenIkeaBirdWaterSheepBoatCowPeePeePooPoo" and the solution for this problem is a xor between each character and a key.
+    - Inside the loop function, a new key is generated after each xor operation.
+    - The process for the new key creation is quite simple, it just take the xor operation output and then assign it in a variable, which will be the new_key, see the decrypt.py.
+    - After the encryption process, it reads a file, which must contain the encrypted flag and then it reads the first line of it.
+    - Finally, it does a comparation between the line and the encrypted key, and if it's equal, then it shows the correct message, otherwise it will fail.
+
+* I skip that one, just looking in gdb output, and i realized that is always the same, so i didn't waste time to analyse it.
+
+Let's test it:
+
+Wrong answer/path/file:
+
+./Encrypt
+Enter the path of the file containing the key: aafafaf
+Nope, it seems like you're not able to crack it eh?
+
+
+Correct answer/path/file:
+
+./Encrypt
+Enter the path of the file containing the key: solution
+Congratulations! You cracked the code!
+
+Hexdump content of "solution":
+
+00000000  58 2e 4b 25 6f 00 65 17  70 15 7b 32 59 3c 5d 1f  |X.K%o.e.p.{2Y<].|
+00000010  76 04 60 37 56 22 47 35  66 0e 6b 0e 7e 3c 53 32  |v.`7V"G5f.k.~<S2|
+00000020  46 05 6a 1d 4d 28 4d 1d  78 1d 4d 22 4d 1d 72 1d  |F.j.M(M.x.M"M.r.|
+00000030
+
+Thanks for this crackme.
+Binary Newbie
