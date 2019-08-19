@@ -1,0 +1,48 @@
+Hello !!!
+
+I solve this crackme very quickly and i didn't look at the full code.
+
+I used gdb, mostly, and ghidra.
+
+In static analysis, i watched some interesting stuff:
+    - It gets 4 numbers
+    - Do some "magic"* transformation and return the correct digit in eax, so i looked for cmp eax, ebx, where eax contains the correct digit and ebx contains the user input.
+    - In gdb, i just force the values, in order to achieve the cmp eax, ebx and the 4 digits were: 3674
+
+
+* i mentioned magic, because i didn't look at the logic of the problem.
+
+Let's test:
+
+./crack3-by-D4RK_FL0W
+Please Enter The Passcode:
+Enter Digit 1: 1
+
+Enter Digit 2: 2
+
+Enter Digit 3: 3
+
+Enter Digit 4: 4
+
+
+WRONG
+
+Now, with the correct answer:
+
+./crack3-by-D4RK_FL0W
+Please Enter The Passcode:
+Enter Digit 1: 3
+
+Enter Digit 2: 6
+
+Enter Digit 3: 7
+
+Enter Digit 4: 4
+
+
+You Did It.
+3674
+
+Thanks for this crackme.
+
+Binary Newbie.
