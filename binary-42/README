@@ -1,0 +1,43 @@
+Hello!!
+
+This crackme was hard and for me it was at least lv3.
+
+For the task, i used Ida for static analysis and gdb for dynamic analysis.
+
+So, i started to play a little with the crackme, with strace and i didn't found nothing.
+
+I opened the crackme in Ida and i notice a couple of things:
+    - It makes a comparation with input[8] and '-'. If it isn't equal, it jump to fail section.
+    - After it parses the input and verifies if the left side is in a hexadecimal format.
+    - If it is in a hexadecimal format, it will pass to the second part of the parsing, otherwise it will jump to fail section.
+    - The second part of the parsing takes the right side of '-' and checks if it is in a hexadecimal format, and the same verification will happen in the topic above.
+    - After parsing the input, it will jump to a section called "decipher".
+    - When i opened the function in ida, i saw that the code was huge, with a lot of constant, and this was the part that took me a great time.
+    - So, the name was pretty straightforward. It will parse the input, which is encrypted, and it will decrypt using some unknown algorithm.
+    - I used retdec decompiler to decompile the crackme, and in the meta inforamtion section, i noticed that the crackme was using the elfcrypt 1.0 packer, which is based in RC4.
+    - With that information in mind, i extracted all the constants and i search for RC4.
+    - I founded a RC4 variation, which is called RC4+, which probably was the base algorithm to encrypt the user input, with some modifications.
+    - RC4+ encryption uses right shift, left shift and xor operation, and then swaps the values in the array.
+    - The return of the decipher function are two values, which must be 0x57415343 and 0x41484148.
+    - If it matches, it will display the good message, otherwise it will fail.
+
+My implemention, in python3, consists in a test case and a decryption function, which uses the 0x57415343 and 0x41484148 as an input, and then it performs some operations and then it swaps the values.
+After, it will return a possible key, which is tested with the original algorithm, and if it's equal to the values above, it will return the key, otherwise it will not.
+
+After some trial and error, i passed the constants list in reverse order, and it gives me the correct key, which is 9b916917-b6117336.
+
+So let's test:
+    Wrong key first:
+        ./chall 
+    enter key: 12345678-12345678
+    fail
+
+    Right key:
+        ./chall 
+    enter key: 9b916917-b6117336
+    pass
+
+Thanks for the crackme.
+Binary Newbie
+
+
