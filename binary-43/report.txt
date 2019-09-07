@@ -1,0 +1,34 @@
+Hello!!
+
+The solution for this problem was very simple.
+
+I only used ghidra to solve this crackme.
+
+It takes an username and a serial, which must have the length divisible by 10, otherwise it will fail.
+The username must be only alpha characteres and the serial must be only alphanumeric characteres.
+
+After, it will get the username and loop into it's length, and it will use the current calculation:
+    => username_calc += (( (i + 1) * (i + 1)) % (( (i + 1) - 2) + ord(username[i]))), where i is the current string state.
+
+The serial will suffer a similar calculation, which is:
+    => serial_calc += (ord(serial[j]) % ((j + 1) + 8)), where j is the current string state.
+
+Finally, it will assert if both calculations are equal, and if it is equal, it will crack the program, otherwise it will fail.
+
+I built a python 3 keygen to solve this crackme.
+
+Let's test:
+    - First, with the wrong input:
+        ./crack
+        Enter username : vvvv
+        Enter serial number :1234567890
+        invalid login!!
+
+    - Finally, with the correct input, note that username could have more than one key:
+        ./crack
+        Enter username : vvvv
+        Enter serial number :x21dcWzSUJ
+        Login complete!!
+
+Thanks for this crackme.
+Binary Newbie.
