@@ -1,0 +1,119 @@
+Hello Destructeur!!!
+
+First of all, thanks for this crackme, it was a pleasure to solve it, and i will appreciate if you send me a copy of the full source code of the crackme to my email: vitor.oliveira.24.24@gmail.com
+
+So, to solve this one, i used ghidra for static analysis and gdb for dynamic analysis.
+
+The static analysis with Ghidra was very briefly, although, i watched some interesting stuff:
+    - First, the crackme is statically linked and it isn't stripped, which means that it has a large size.
+    - It receives an input from stdin and it calls 2 functions, billet and f.
+    - The billet function receives -1 as an argument and it will be compare with 1.
+    - If it isn't equal, it will call the callmemaybe function, which calls ptrace.
+    - The callmemaybe function returns the ptrace result, which should be -1 or 0.
+    - Next, the billet function uses the ptrace return to do some calculation and uses mprotec() with write, exec and read permissions, and also uses the sysconf and unistd to set a memory page to the shellcode, which packs the verification algoritm.
+    - I don't know if the shellcode is a "self modifying code" or not, but when you assign the correct value to eax, it will unpack the crackme and the verification algorithm will run.
+
+I spent the most of my time in the dynamic analysis, where i noticed:
+    - In gdb, without doing a persistent patch, i changed the callmemaybe return to 0x0, in order to bypass the anti debug trick and unpack the crackme. The snippet below shows the magic:
+
+   0x400bb1 <billet+22>:	call   0x400b77 <callmemaybe>
+=> 0x400bb6 <billet+27>:	mov    DWORD PTR [rbp-0x44],eax
+   gdb-peda$ set $eax=0x0
+
+   - After, i jumped to f function, where the password is decrypted.
+   - So, the shellcode uses three functions, which are strlen, dofu and gotop.
+   - The dofu function creates the correct password message, by xoring with some constants, and the gotop function does the same by creating the wrong password message.
+   - The f function used the shadow space to allocate some bytes, which are in the snippet below:
+
+   0x0000000000489092 <+9>:	    mov    QWORD PTR [rbp-0x48],rdi ; user input
+   0x0000000000489096 <+13>:	mov    DWORD PTR [rbp-0x4c],esi ; 0x0
+   0x0000000000489099 <+16>:	mov    DWORD PTR [rbp-0x18],0x3 ; below, the bytes of the encrypted flag
+   0x00000000004890a0 <+23>:	mov    BYTE PTR [rbp-0x1c],0x16
+   0x00000000004890a4 <+27>:	mov    BYTE PTR [rbp-0x1b],0x1
+   0x00000000004890a8 <+31>:	mov    BYTE PTR [rbp-0x1a],0x33
+   0x00000000004890ac <+35>:	mov    BYTE PTR [rbp-0x40],0x47
+   0x00000000004890b0 <+39>:	mov    BYTE PTR [rbp-0x3f],0x69
+   0x00000000004890b4 <+43>:	mov    BYTE PTR [rbp-0x3e],0x7
+   0x00000000004890b8 <+47>:	mov    BYTE PTR [rbp-0x3d],0x7a
+   0x00000000004890bc <+51>:	mov    BYTE PTR [rbp-0x3c],0x6d
+   0x00000000004890c0 <+55>:	mov    BYTE PTR [rbp-0x3b],0x6e
+   0x00000000004890c4 <+59>:	mov    BYTE PTR [rbp-0x3a],0x23
+   0x00000000004890c8 <+63>:	mov    BYTE PTR [rbp-0x39],0x60
+   0x00000000004890cc <+67>:	mov    BYTE PTR [rbp-0x38],0x63
+   0x00000000004890d0 <+71>:	mov    BYTE PTR [rbp-0x37],0x75
+   0x00000000004890d4 <+75>:	mov    BYTE PTR [rbp-0x36],0x74
+   0x00000000004890d8 <+79>:	mov    BYTE PTR [rbp-0x35],0x42
+   0x00000000004890dc <+83>:	mov    BYTE PTR [rbp-0x34],0x63
+   0x00000000004890e0 <+87>:	mov    BYTE PTR [rbp-0x33],0x31
+   0x00000000004890e4 <+91>:	mov    BYTE PTR [rbp-0x32],0x41
+   0x00000000004890e8 <+95>:	mov    BYTE PTR [rbp-0x31],0x72
+   0x00000000004890ec <+99>:	mov    BYTE PTR [rbp-0x30],0x60
+   0x00000000004890f0 <+103>:	mov    BYTE PTR [rbp-0x2f],0x3
+   0x00000000004890f4 <+107>:	mov    BYTE PTR [rbp-0x2e],0x25
+   0x00000000004890f8 <+111>:	mov    BYTE PTR [rbp-0x2d],0x31
+   0x00000000004890fc <+115>:	mov    BYTE PTR [rbp-0x2c],0x4
+   0x0000000000489100 <+119>:	mov    BYTE PTR [rbp-0x2b],0x72
+
+  - Then, it will take the length of the user input and the shadow space buffer and it will compare if the length is equal.
+  - If it is, it will jump to the decryption part, otherwise it will fail, and jump to the gotop function.
+
+     0x0000000000489144 <+187>:	cmp    rbx,rax ; rax = shadow space buffer and rbx, user_input buffer
+     0x0000000000489147 <+190>:	je     0x48915f <f+214>
+
+  - The decryption part starts with the comparation of rbp-0x14 with 0x15 and if it less or equal than 0x15, it will decrypt a single character of the shadow space with the follow code below:
+
+=> 0x0000000000489168 <+223>:	mov    eax,DWORD PTR [rbp-0x14] ; load the loop counter in eax
+   0x000000000048916b <+226>:	cdqe
+   0x000000000048916d <+228>:	movzx  eax,BYTE PTR [rbp+rax*1-0x40] ; eax receives buffer[loop counter]
+   0x0000000000489172 <+233>:	sub    eax,0x1 ; eax = (int)eax - 1
+   0x0000000000489175 <+236>:	mov    edx,eax ; edx = (char)eax
+   0x0000000000489177 <+238>:	mov    eax,DWORD PTR [rbp-0x14]
+   0x000000000048917a <+241>:	cdqe
+   0x000000000048917c <+243>:	mov    BYTE PTR [rbp+rax*1-0x40],dl ; dl contains the operations <+236> mov edx, eax
+   0x0000000000489180 <+247>:	mov    eax,DWORD PTR [rbp-0x14]
+   0x0000000000489183 <+250>:	cdqe
+   0x0000000000489185 <+252>:	movzx  ecx,BYTE PTR [rbp+rax*1-0x40] ; ecx = dl
+   0x000000000048918a <+257>:	mov    eax,DWORD PTR [rbp-0x14]
+   0x000000000048918d <+260>:	cdq
+   0x000000000048918e <+261>:	idiv   DWORD PTR [rbp-0x18] ; edx = loop counter % 3
+   0x0000000000489191 <+264>:	mov    eax,edx
+   0x0000000000489193 <+266>:	cdqe
+   0x0000000000489195 <+268>:	movzx  eax,BYTE PTR [rbp+rax*1-0x1c] ; eax = buffer[edx]
+   0x000000000048919a <+273>:	sub    eax,0x1 ; eax = buffer[edx] - 1
+   0x000000000048919d <+276>:	xor    eax,ecx ; decrypt the character
+   0x000000000048919f <+278>:	mov    BYTE PTR [rbp-0x19],al ; al contains the decrypted character, which will be part of the correct password
+   0x00000000004891a2 <+281>:	mov    eax,DWORD PTR [rbp-0x14]
+   0x00000000004891a5 <+284>:	cdqe
+   0x00000000004891a7 <+286>:	movzx  eax,BYTE PTR [rbp+rax*1-0x40]
+   0x00000000004891ac <+291>:	cmp    al,BYTE PTR [rbp-0x19] ; rbp-0x19 has the decrypted character and al must be equal to continue the process
+   0x00000000004891af <+294>:	jne    0x4891bd <f+308> ; if it isn't equal, it will jmp to gotop
+   0x00000000004891b1 <+296>:	add    DWORD PTR [rbp-0x14],0x1 ; loop counter++
+   0x00000000004891b5 <+300>:	cmp    DWORD PTR [rbp-0x14],0x15 ; loop counter <= 0x15 or loop counter < 0x16
+   0x00000000004891b9 <+304>:	jle    0x489168 <f+223>
+   0x00000000004891bb <+306>:	jmp    0x4891be <f+309>
+
+   Finally, it will compare the length of the decrypted string with 0x16, and if it's equal, then, it will display the correct message, otherwise it will fail.
+
+ =>0x00000000004891be <+309>:	cmp    DWORD PTR [rbp-0x14],0x16 ; rbp-0x14 is the loop counter
+   0x00000000004891c2 <+313>:	je     0x4891d7 <f+334>
+
+   That's it !!!
+
+   The correct password is Sh4ll_7_Passw0rd_0101d
+
+   Let's test:
+
+    Random input:
+       ./Sh4ll7
+            Give me your password: 12131
+            Bad password
+
+    Correct input:
+        ./Sh4ll7
+            Give me your password: Sh4ll_7_Passw0rd_0101d
+            Good password
+
+I attached a little python2 script that decrypts the flag.
+
+Again, thanks for this crackme.
+Binary Newbie.
