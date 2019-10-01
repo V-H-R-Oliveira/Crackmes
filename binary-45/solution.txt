@@ -1,0 +1,17 @@
+ltrace ./alien_bin
+
+strcmp("1234", "bd23cf3f56baa86bc")
+--------------------------------------------
+key = bd23cf3f56baa86bc
+
+Right input:
+
+ ./alien_bin 
+Feed me the right password: bd23cf3f56baa86bc
+blip blop :)
+
+Wrong input:
+
+./alien_bin 
+Feed me the right password: 123
+ERROR

@@ -45,3 +45,4 @@
 - binary-42 = https://crackmes.one/crackme/5d07f03233c5d41c6d56e10c
 - binary-43 = https://crackmes.one/crackme/5ab77f6433c5d40ad448cae0
 - binary-44 = https://crackmes.one/crackme/5b3a523b33c5d421d6f6d427
+- binary-45 = https://crackmes.one/crackme/5d78168833c5d46f00e2c428
