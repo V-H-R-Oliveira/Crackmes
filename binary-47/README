@@ -1,0 +1,38 @@
+Hello Silva97 !!!
+
+I used ghidra and gdb for this one.
+
+There is a function that decrypts some cipher text in the begining and it displays: "Don't patch it!" and "Insert your password: "
+This function is in decode_greets.py script.  
+
+Next, it takes an user input and calls the decrypt function with the user input and the correct encrypted password as arguments.
+
+Then, it decrypts the first encrypted char and compares with the first char of the user input, and if it matches, it will repeat the process until the user input ends, otherwise it will break the loop and return 1.
+
+The crucial assembly line is:
+	- 1434:       39 45 fc                cmp    DWORD PTR [rbp-0x4],eax ; where rbp-0x4 has the decoded password char, and eax has the user input char
+
+So, i only set a breakpoint in this line, and then i dumped the registers values, in a gdb script, in order to get the correct password.
+
+If it ends successfully, it will return 0 and display the good message, otherwise it will display the bad message.
+
+The decrypt function is in decode_password.py script.
+
+Let's make a quickly test:
+
+First, an wrong input:
+./login 
+Don't patch it!
+Insert your password: 12354
+Wrong!
+
+Finally, the correct password:
+./login 
+Don't patch it!
+Insert your password: ccs-passwd44
+Correct!
+
+* The same algorithm is used to decrypt the password and the initial messages.
+
+Thanks for this crackme.
+Binary Newbie.
