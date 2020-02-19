@@ -1,0 +1,49 @@
+Analysis:
+
+Username length >= 5
+Serial length == 9
+serial[4] == '-'
+
+const0 = 0x7e4c9e32 * ord(username[i]); i goes from 0 to length username - 1
+convert the first and the second half of the serial to a hexadecimal value, using const0 as a base value
+
+It performs the operations below (constants are in the keygen):
+
+checksum = extract_checksum(second_half_hex, const1, const2)
+val = float_op(checksum, const0, const1) # transform the arg0 and arg1 in a float value, multiplies then (storing then in arg0), transform arg2 in float, swap arg2 and arg0 values, get the remainder of arg2 and arg0 values.
+val2 = float_op(first_half_hex, checksum, const1)
+checksum2 = extract_checksum(const4, const3, val)
+checksum3 = extract_checksum(const5, const3, val2)
+val3 = float_op(checksum3, checksum2, const3)
+
+And finally extracts the remainder of val3 with const1 and compares with first half of the serial, encoded in hexadecimal format.
+If it's equal -> cracked
+otherwise -> failed
+
+Example:
+
+Wrong combination:
+
+./Crackme3 
+Crackme3 by S!x0r
+
+Username: 12345
+Serial: 1234-6789
+Invalid Username/Serial combination!
+
+Correct combination:
+
+python3 keygen.py 
+Enter an username, with a length >= 5: tired
+success tired e817-dbAE
+
+./Crackme3 
+Crackme3 by S!x0r
+
+Username: tired
+Serial: e817-dbAE
+Correct, now write a Keygen/Tutorial!
+
+Thanks
+
+Binary Newbie
