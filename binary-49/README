@@ -1,0 +1,61 @@
+The binary has the elf headers currupted, so you cannot dissamble it in objdump, and you cannot run it on gdb.
+
+In order to fix it, i wrote a simple C code, that parses the elf and sets the shoff, the shstrndx, and the shnum to 0, and, sets the version to 1.
+After fixed, you can debug it on gdb.
+
+Running with strace, it shows a call to ptrace(PTRACE_TRACEME). 
+To be able to debug on gdb, you should bypass the anti-debug trick.
+
+On ghidra, the ptrace_call consist in:
+
+void ptrace_call(void)
+{
+  /* var declarations */
+
+  file_handler = fopen("/tmp","r");
+  fd = fileno(file_handler);
+
+  if (5 < fd) {
+    puts("I\'m sorry GDB! You are not allowed!");
+    exit(1);
+  }
+
+  fclose(file_handler);
+  asm("int 80");
+  global_val_code = (unsigned int) -1; // -1 if you run with gdb or tracing, otherwise it will be 0 or a positive number
+
+  if (global_val_code < 0) {
+    puts("Tracing is not allowed... Bye!");
+    exit(1);
+  }
+
+  // success, you can continue the debugging.
+}
+
+There are a couple of ways to bypass, but i simply switch eax in fileno output to be 4. (set $eax=0x4) (5 < 4 == false), 
+and eax to be a positive number, like 1. (set $eax=0x1) (1 < 0 == false).
+
+After the bypass, it reads 10 characters from stdin and encode it by oring with 0x90 (input[i] |= 0x90).
+Then, it loads the encrypted password and compares each byte of the encrypted password with each byte of the encoded input (enc_data[i] == encoded_input[i]);
+If it isn't equal, then return -1, otherwise, if all the bytes are equal, then return 0.
+
+There are two methods to solve it.
+
+1º method - apply the reverse operation of | (logic +) in the encrypted flag (encrypted_flag[i] -= 0x90);
+2º method - apply a xor with the encrypted flag and 0x90. (encrypted_flag[i] ^= 0x90).
+
+The correct output, for both methods, will be "ghadah#ll".
+
+Let's test it.
+
+./crackme.02.32 
+Please tell me my password: 123456789
+No! No! No! No! Try again.
+
+./crackme.02.32 
+Please tell me my password: ghadah#ll
+The password is correct!
+Congratulations!!!
+
+Thanks for the crackme.
+Binary Newbie.
