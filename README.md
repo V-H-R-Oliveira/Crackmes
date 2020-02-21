@@ -50,3 +50,4 @@
 - binary-47 = https://crackmes.one/crackme/5db0ef9f33c5d46f00e2c729
 - binary-48 = https://crackmes.one/crackme/5ab77f5c33c5d40ad448c62e
 - binary-49 = https://crackmes.one/crackme/5ab77f6533c5d40ad448cbc2
+- binary-50 = https://crackmes.one/crackme/5ab77f5c33c5d40ad448c666

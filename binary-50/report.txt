@@ -1,0 +1,34 @@
+Easy way
+
+On gdb:
+- Set a breakpoint to 0x80480e3 (b *0x80480e3);
+- Dump the value of esi (x/x $esi), and transform the hexadecimal char to uppercase (04919AB9).
+
+###
+
+gef➤  x/x $esi
+0x8048096:	0x04919ab9 ; correct Password 
+gef➤  x/x $edi
+0x8049289:	0x12345678 ; my fake input
+
+###
+
+Correct:
+./j666 
+Crackme 666 Josep
+Password: 04919AB9
+OK
+
+Wrong:
+./j666 
+Crackme 666 Josep
+Password: 12345678
+No
+
+Simple analysis:
+
+In a high level description:
+
+Then it reads 8 bytes from stdin, and converts it to a hexadecimal value (note: it accepts only uppercase chars (ABCDEF)), storing the converted value in another variable.
+Then it compares the 4 bytes of user input and passwd, and if it's equal then it shows good message, otherwise, it shows bad message.
+There are 2 functions output that is never used, so it not worths to be explained.
