@@ -1,0 +1,13 @@
+A simple crackme with an corrupted elf.
+While you don't fix the headers, you cannot debug it.
+
+With that in mind, i made a C code that fixs only one field of the elf structures, which is e_shstrndx, assign it to 0.
+The fix.c does that, and generate a debuggable copy of the thellurik.
+
+The program reads an username and a serial from stdin. (note: there is a buffer overflow vuln, because he doesn't verify the size of both entries);
+Then, it will sum all the username ascii characters and it will compute a "checksum" (see in keygen.py).
+After it will put 1337 and the checksum in a format string (again see in keygen.py) and will compare with the user serial.
+If it's correct, i will print the good message, otherwise it will print the bad message.
+
+Thanks for the crackme.
+Binary Newbie.
