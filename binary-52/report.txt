@@ -1,0 +1,47 @@
+A little tricky crackme.
+
+First, it prompts for the size of the passwd, which should be 10.
+If it's greater than 10, it will assign the size to 10, otherwise it will keep the original size.
+
+After that, it will load the password to a buffer, ghnuhbijra, and it will append a @.
+
+Then, It will prompt for the password characters, and it will compare each inputed char to each password character until it reaches @, or, until it founds two different characters.
+If all the bytes match, then it will display the good message, otherwise, it will display the bad message.
+
+Let's test it:
+
+Bad password:
+
+./crackme
+Password: 10
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+Login unsuccessful.
+
+
+Good password:
+
+./crackme
+Password: 10
+g
+h
+n
+u
+h
+b
+i
+j
+r
+a
+Login successful.
+
+Thanks for the crackme.
+Binary Newbie.
