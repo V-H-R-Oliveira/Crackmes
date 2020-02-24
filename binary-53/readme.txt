@@ -1,0 +1,4 @@
+- Reads an input from stdin;
+- verify the charset [0-9];
+- compares with 13303518 == 0xcafede.
+- If it's equal goto success, otherwise goto fail
