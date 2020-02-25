@@ -1,0 +1,11 @@
+Quick analysis:
+    - It gets the username from stdin, which must be 5 characters long
+    - It reads the file in /var/tmp/thegame.serial and it checks if  his length is 32 bytes.
+    - If it's equal, then it loads the first byte of the username, and the last byte of the charset and xor both.
+    - Then, it checks if the new byte is equal to the last byte of the serial.
+    - If it matches, then it will decrement the charset counter, and also will increment the username counter, and loop until it reads all the charset bytes.
+    - If there is any mismatch between both bytes, then it will jump to the bad message, otherwise, if it's everything correct, then it will jump to the good message.
+
+I attached a keygen.py.
+Thanks for the crackme.
+Binary Newbie.

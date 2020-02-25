@@ -55,3 +55,4 @@
 - binary-52 = https://crackmes.one/crackme/5cf574fe33c5d41c6d56e01b
 - binary-53 = https://crackmes.one/crackme/5ab77f5c33c5d40ad448c665
 - binary-54 = https://crackmes.one/crackme/5ab77f5433c5d40ad448c1d6
+- binary-55 = https://crackmes.one/crackme/5ab77f5c33c5d40ad448c65b

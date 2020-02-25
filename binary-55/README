@@ -1,0 +1,5 @@
+#INFOS : 32bit Unix keygenm-e coded with NASM.
+
+#GOAL : Understand the algorithm and create a keygen, NOPing or modify a jump is not the solution...
+
+#fr0g 2016 (irc.big-daddy.fr/#hwc)
