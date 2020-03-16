@@ -1,0 +1,17 @@
+Receives one command-line arg;
+Checks if the size is 15;
+Xor each 4-bytes block with the constant 0x1337babe. (the last block has the size of 3 bytes);
+Compares each 4 bytes of the correct checksum with each 4 bytes of the arg checksum, and if it doesn't match, it will fail.
+If the blocks are correct, then it will display the correct message, otherwise it will fail.
+
+Wrong input:
+./CrackmeLinux 123456789012345
+Try again, bro...
+
+Correct input:
+./CrackmeLinux 0bfu5c4t3D=-_-\"
+Yeah ! You did it !
+
+The python2 script decode.py decrypts the password.
+Thanks for the crackme !!!
+Binary Newbie.
