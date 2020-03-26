@@ -1,0 +1,7 @@
+username length >= 4
+serial length == 25
+./keygenme-cpy cheese WBQCYZPFPSGJBVGKFUTMNKIOE
+Correct serial key!
+./keygenme-cpy alala XLIATEJGPSHJDUTKYIAHYMXLQ
+Correct serial key!
+
