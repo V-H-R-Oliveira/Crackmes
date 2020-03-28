@@ -1,0 +1,110 @@
+Hi destructeur.
+
+Let's go straight to the point.
+
+To unpacking (static analysis in IDA):
+
+First locate nmap syscall
+
+pop     rbx
+push    1
+push    40000Ch
+push    rax
+push    39DBD7h
+push    rcx
+push    r15
+mov     edi, 800000h    ; addr
+push    7
+pop     rdx             ; prot
+mov     esi, 39DBD7h    ; len
+push    32h
+pop     r10             ; flags
+sub     r8d, r8d        ; fd
+push    9
+pop     rax
+syscall                 ; LINUX - sys_mmap
+cmp     edi, eax
+jnz     loc_489BFB
+
+
+The decryption stuff occurs in:
+
+add     ebp, edx
+add     [rsp+28h+var_20], edx
+add     [rsp+28h+var_10], edx
+mov     ecx, ebx
+sub     ecx, esi
+shr     ecx, 3
+cld
+rep movsq
+
+Finally, the crackme begins at: call rbp, where rbp has the init address.
+
+------------------------------------------------------------------------------------
+
+Password decryption:
+
+In gdb:
+
+catch syscall ptrace
+r
+Give a large input, like "1031031030130103103103013010"
+set $eax=0
+
+The easiest way:
+b *0x4014f6 = cmp bl, al, where bl is the correct passwd character and al is the user input character.
+set $al=$bl, grab the $bl value and continues until it get's the correct message.
+
+The hardest way:
+
+0x4014d4                  mov    eax, DWORD PTR [rax]; eax = password[i]
+0x4014d6                  xor    eax, 0xffffffab; passwd[i] ^= 0xffffffab
+0x4014d9                  add    eax, 0xc; passwd[i] += 0xc
+0x4014dc                  mov    ebx, eax; ebx = passwd[i]
+
+To show the encrypted passwd:
+
+b *0x4014d4
+x/22x $rax
+0x7a8760:	0x000002fe	0x000002f7	0x000002fe	0x000002f7
+0x7a8770:	0x000002f8	0x000002c9	0x000002c8	0x000002fd
+0x7a8780:	0x000002c8	0x000002f3	0x000002c6	0x000002fc
+0x7a8790:	0x000002fe	0x000002c9	0x000002fc	0x000002cd
+0x7a87a0:	0x000002fe	0x000002fc	0x000002f4	0x000002ca
+0x7a87b0:	0x000002f2	0x00000000
+
+In order to decrypt, i wrote a python3 script, called decrypt_passwd.py.
+
+Let's test with a wrong passwd:
+
+./Sh4ll8 
+Welcome to Sh4ll8! Now, can you give me the password please: 
+> 10310310
+I can't let you in with this password!
+
+Now with the correct passwd:
+
+./Sh4ll8 
+Welcome to Sh4ll8! Now, can you give me the password please: 
+> ahah_nobodycancrackme
+[SUCCESS] T-That's impossible! You are so strong!
+
+*Note: the crackme has a lot of bugs.
+
+The first one, you could get the right message, with ltrace.
+
+ltrace ./Sh4ll8 
+Couldn't find .dynsym or .dynstr in "/proc/14725/exe"
+vitor@new-host:~/Área de Trabalho/crackmes/tmp$ Welcome to Sh4ll8! Now, can you give me the password please: 
+> [SUCCESS] T-That's impossible! You are so strong!
+
+The second one, the crackme doesn't validate all the password, so you can input the password fragments like, ahah_nobo.
+
+./Sh4ll8 
+Welcome to Sh4ll8! Now, can you give me the password please: 
+> ahah_nobo
+[SUCCESS] T-That's impossible! You are so strong!
+
+After all, it was a good challenge.
+Thanks for the crackme.
+Binary Newbie.

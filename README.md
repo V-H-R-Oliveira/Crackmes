@@ -61,3 +61,4 @@
 - binary-58 = https://crackmes.one/crackme/5e2c557933c5d419aa013658
 - binary-59 = https://crackmes.one/crackme/5e6ac90233c5d4439bb2de39
 - binary-60 = https://crackmes.one/crackme/5e76c37d33c5d4439bb2df1b
+- binary-61 = https://crackmes.one/crackme/5b506ba633c5d41c0b8ae522
