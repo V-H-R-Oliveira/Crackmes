@@ -1,0 +1,31 @@
+entrada
+	byte 1
+	byte 2
+	byte 3
+	byte 4
+	byte 5
+	byte 6
+
+vai de trás pra frente
+
+len(password) = 6
+
+variáveis contém o valor correto
+
+n = 4 
+xor n ^ 0x83
+
+j = 8
+xor j ^ 0x36
+
+x = 15
+xor x ^ 0x9d 
+
+k = 16
+xor k ^ 0xcd
+
+m = 23
+xor m ^ 0xec
+
+y = 42
+xor y ^ 0xf6
