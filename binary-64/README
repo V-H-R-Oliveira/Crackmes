@@ -1,0 +1,41 @@
+Dr.Spliff's Crackme - v0.1 (Alpha) (Linux/ia32)
+
+------
+Intro:
+This is a quick reference implementation of a protection scheme. In total 
+it took about two hours from start to finish (including testing and debugging)
+to get this lil crackme finished.
+
+--------
+Details:
+It's written in C, with pieces of hand-tweaked assembler. Compiled using gcc 3.3.1.
+
+------
+Goals:
+Your goals for this crackme are to patch the application so that it thinks
+any key you enter is valid. Any other neat tricks, or not so obvious methods
+of cracking this would be nice to see.
+
+It is trivially easy create a 'keygen' for this, i spent all of 20 minutes writing that part!
+
+	while (l_name[0] != '\0')
+	{
+		l_key += l_name[0];
+		l_name++;
+	}
+
+So dont bother - lamerPoints++ :)
+
+-----------------
+Before you start:
+This was compiled on a glibc 2.3 system (SuSE 9), if you're running an earlier 
+version of glibc you're gonna run into trouble.
+
+-----
+Tips:
+your looking for 56 bytes of position independant fairy dust :)
+
+-------
+Cheers:
+Happy new year, now get cracking.
+Dr.Spliff 

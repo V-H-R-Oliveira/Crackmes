@@ -1,0 +1,5 @@
+It contains two patches.
+
+The bad message offset is 0x804855b, which could be located at:  804877d: push 0x804855b
+The first one is just a replace of:  8048788: call DWORD PTR ds:0x8049b8c, by call 80484fc (good message) 
+The second "patch" is a python3 script which uses r2pipe to alter the registers in runtime, in order to be always successful.
