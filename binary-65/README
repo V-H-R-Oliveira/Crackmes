@@ -1,0 +1,48 @@
+Hello jeffli
+
+[Tools]:
+    - IDA
+    - GDB
+
+TL;DR: You need to implement the bubble sort algorithm, in ascending order, to the given array:
+[1, 2, 6, 0, 3, 5, 4, 8, 7, 12, 9, 10, 13, 17, 11, 18, 14, 19, 16, 15]
+
+Complete answer:
+
+It reads a number, which will work as an index of the array, and then it will do a xor swap using the assembly lines below:
+
+.text:00000000000006A7                 lea     ecx, [rax+1]
+.text:00000000000006AA                 mov     edx, eax
+.text:00000000000006AC                 mov     eax, [rbx+rdx*4] ; arr[i]
+.text:00000000000006AF                 xor     eax, [rbx+rcx*4]
+.text:00000000000006B2                 mov     [rbx+rdx*4], eax ; arr[i] ^= arr[i+1]
+.text:00000000000006B5                 xor     eax, [rbx+rcx*4]
+.text:00000000000006B8                 mov     [rbx+rcx*4], eax
+.text:00000000000006BB                 xor     [rbx+rdx*4], eax ; arr[i+1] ^= arr[i]
+.text:00000000000006BE                 lea     rax, unk_201024
+.text:00000000000006C5                 mov     ecx, [rbx]
+
+Obs: you need to provide a number between 0 and 18. If you provide a higher number, it will fail, because it loops through an invalid index.
+
+After, it will compare by ascending order using the follow lines:
+
+.text:00000000000006D0                 mov     edx, [rax]
+.text:00000000000006D2                 cmp     edx, ecx        ; compare i and i + 1 by the lower one
+.text:00000000000006D4                 jb      short loc_691
+.text:00000000000006D6                 add     rax, 4
+.text:00000000000006DA                 mov     ecx, edx
+.text:00000000000006DC                 cmp     r13, rax ; if it is sorted, then print "Well Done", otherwise print "Try again"
+.text:00000000000006DF                 jnz     short loc_6D0
+.text:00000000000006E1                 lea     rdi, s          ; "Well done!"
+.text:00000000000006E8                 call    _puts
+
+I attached a little python3 script, which prints the correct values.
+
+A little demo:
+
+python main.py | ./main
+Well done!
+cat: flag.txt: Arquivo ou diretório inexistente
+
+Thanks for the crackme !!
+Binary Newbie
